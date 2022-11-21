@@ -15,3 +15,6 @@
 
 ### gendiff script YAML
 [![asciicast](https://asciinema.org/a/VeMnRJhSE6SYxkdmhhDbzJDMI.svg)](https://asciinema.org/a/VeMnRJhSE6SYxkdmhhDbzJDMI)
+
+### Works with flat and nested structures
+[![asciicast](https://asciinema.org/a/I6PYfI7YzC8ZjS8wcXUzZRnPF.svg)](https://asciinema.org/a/I6PYfI7YzC8ZjS8wcXUzZRnPF)
