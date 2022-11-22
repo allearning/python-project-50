@@ -1,4 +1,6 @@
 """Module to compute differences between files."""
+from gendiff.data_loader import load_data
+from gendiff.formatters import get_formatter
 
 # States
 ADDED = 0
@@ -11,16 +13,16 @@ def find_state(key, dict1: dict, dict2: dict):
     value1 = dict1.get(key, None)
     value2 = dict2.get(key, None)
 
-    if value1 is None:
+    if key not in dict1:
         return ADDED
-    if value2 is None:
+    if key not in dict2:
         return REMOVED
     if value1 == value2:
         return SAME
     return MODIFIED
 
 
-def generate_diff(dict1: dict, dict2: dict) -> dict:
+def compare_dicts(dict1: dict, dict2: dict) -> dict:
     """Recursively generates difference bettween dic1 and dict2.
 
     Args:
@@ -41,6 +43,14 @@ def generate_diff(dict1: dict, dict2: dict) -> dict:
 
         if diffs[key]['state'] == MODIFIED:
             if isinstance(dict1[key], dict) and isinstance(dict2[key], dict):
-                diffs[key]['children'] = generate_diff(dict1[key], dict2[key])
+                diffs[key]['children'] = compare_dicts(dict1[key], dict2[key])
 
     return diffs
+
+
+def generate_diff(file_path1, file_path2, format_name):
+    data1 = load_data(file_path1)
+    data2 = load_data(file_path2)
+    formatter = get_formatter(format_name)
+    diffs = compare_dicts(data1, data2)
+    return formatter(diffs)

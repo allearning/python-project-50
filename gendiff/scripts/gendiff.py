@@ -2,15 +2,10 @@
 """Runs gendiff script."""
 import argparse
 
-from gendiff.data_loader import load_data
 from gendiff.gendiff import generate_diff
-from gendiff.formatters import stylish
 
 
 def main():
-    formatters = {
-        'stylish': stylish
-    }
     parser = argparse.ArgumentParser(
         description='Compares two configuration files and shows a difference.',
     )
@@ -20,12 +15,11 @@ def main():
         '-f', '--format', help='set format of output', default='stylish',
     )
     args = parser.parse_args()
-    data1 = load_data(args.first_file)
-    data2 = load_data(args.second_file)
-    formatter = formatters[args.format]
-    diffs = generate_diff(data1, data2)
-    dif_string = formatter(diffs)
-    print(dif_string)
+    file1 = args.first_file
+    file2 = args.second_file
+    formatter = args.format
+    diffs = generate_diff(file1, file2, formatter)
+    print(diffs)
 
 
 if __name__ == '__main__':

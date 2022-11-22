@@ -8,6 +8,25 @@ SAME = 2
 MODIFIED = 3
 
 
+def get_formatter(name: str):
+    formatters = {
+        'stylish': stylish,
+        'plain': plain,
+    }
+    return formatters[name]
+
+
+def get_converted(value):
+    mapping = {
+        None: 'null',
+        False: 'false',
+        True: 'true',
+    }
+    if isinstance(value, dict):
+        return value
+    return mapping.get(value, value)
+
+
 def print_key(key: str, value_of_key, prefix: str, level=0) -> 'list[str]':
     """Prints key, where key can be single value or dict
 
@@ -22,6 +41,7 @@ def print_key(key: str, value_of_key, prefix: str, level=0) -> 'list[str]':
     """
     strings = []
     offset = ' ' * 4 * level
+    value_of_key = get_converted(value_of_key)
     if isinstance(value_of_key, dict):
         strings.append(f'{offset}{prefix}{key}: {{')
         for k, v in value_of_key.items():
@@ -34,15 +54,17 @@ def print_key(key: str, value_of_key, prefix: str, level=0) -> 'list[str]':
 
 def simple_state_print(dif, level, key):
     state = dif['state']
+    value1 = dif['value1']
+    value2 = dif['value2']
     if state == ADDED:
-        return print_key(key, dif['value2'], SECOND_PREFIX, level)
+        return print_key(key, value2, SECOND_PREFIX, level)
     if state == REMOVED:
-        return print_key(key, dif['value1'], FIRST_PREFIX, level)
+        return print_key(key, value1, FIRST_PREFIX, level)
     if state == SAME:
-        return print_key(key, dif['value1'], COMMON_PREFIX, level)
+        return print_key(key, value1, COMMON_PREFIX, level)
     if state == MODIFIED:
-        return print_key(key, dif['value1'], FIRST_PREFIX, level) + \
-            print_key(key, dif['value2'], SECOND_PREFIX, level)
+        return print_key(key, value1, FIRST_PREFIX, level) + \
+            print_key(key, value2, SECOND_PREFIX, level)
 
 
 def print_dif(dif_list: dict, level=0):
@@ -65,4 +87,47 @@ def print_dif(dif_list: dict, level=0):
 
 def stylish(dif_list: dict):
     strings = ['{'] + print_dif(dif_list, level=0) + ['}']
+    return '\n'.join(strings)
+
+
+def get_value_or_complex(value):
+    if isinstance(value, dict):
+        return '[complex value]'
+    if isinstance(value, str):
+        return f"'{value}'"
+    return get_converted(value)
+
+
+def simple_state_plain_print(dif, key, prefix=''):
+    state = dif['state']
+    value1 = get_value_or_complex(dif['value1'])
+    value2 = get_value_or_complex(dif['value2'])
+    if state == ADDED:
+        return f"Property '{prefix}{key}' was added with value: {value2}"
+    if state == REMOVED:
+        return f"Property '{prefix}{key}' was removed"
+    if state == MODIFIED:
+        return \
+            f"Property '{prefix}{key}' was updated. From {value1} to {value2}"
+
+
+def plain_strings(dif_list: dict, prefix=''):
+    strings = []
+    not_same_keys = set(
+        filter(lambda k: dif_list[k]['state'] != SAME, dif_list.keys())
+    )
+    for key in sorted(not_same_keys):
+        state = dif_list[key]['state']
+        children = dif_list[key].get('children', None)
+        if state == MODIFIED and children:
+            strings.extend(plain_strings(children, f'{prefix}{key}.'))
+        else:
+            strings.append(
+                simple_state_plain_print(dif_list[key], key, prefix),
+            )
+    return strings
+
+
+def plain(dif_list: dict):
+    strings = plain_strings(dif_list)
     return '\n'.join(strings)
