@@ -42,7 +42,7 @@ def compare_dicts(dict1: dict, dict2: dict) -> dict:
     return diffs
 
 
-def generate_diff(file_path1, file_path2, format_name):
+def generate_diff(file_path1, file_path2, format_name='stylish'):
     data1 = load_data(file_path1)
     data2 = load_data(file_path2)
     formatter = get_formatter(format_name)
