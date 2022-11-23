@@ -20,14 +20,14 @@ def get_formatter(name: str):
 
 
 def get_converted(value):
-    mapping = {
-        None: 'null',
-        False: 'false',
-        True: 'true',
-    }
-    if isinstance(value, dict):
-        return value
-    return mapping.get(value, value)
+    if isinstance(value, bool) or value is None:
+        mapping = {
+            None: 'null',
+            False: 'false',
+            True: 'true',
+        }
+        return mapping.get(value, value)
+    return value
 
 
 def print_key(key: str, value_of_key, prefix: str, level=0) -> 'list[str]':
