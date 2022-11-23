@@ -1,12 +1,6 @@
 """Module to compute differences between files."""
 from gendiff.data_loader import load_data
-from gendiff.formatters import get_formatter
-
-# States
-ADDED = 0
-REMOVED = 1
-SAME = 2
-MODIFIED = 3
+from gendiff.formatters import get_formatter, ADDED, REMOVED, SAME, MODIFIED
 
 
 def find_state(key, dict1: dict, dict2: dict):

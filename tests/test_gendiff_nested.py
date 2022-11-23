@@ -1,5 +1,6 @@
+import json
 from gendiff.gendiff import compare_dicts, generate_diff
-from gendiff.formatters import stylish, plain
+from gendiff.formatters import json_formatter, stylish, plain
 from gendiff.data_loader import load_data
 
 
@@ -94,3 +95,14 @@ def test_gendiff_stylish():
     path2 = 'tests/fixtures/file2.json'
     diffs = generate_diff(path1, path2, 'stylish')
     assert diffs == correct
+
+
+def test_json_json():
+    path1 = 'tests/fixtures/file1.json'
+    path2 = 'tests/fixtures/file2.json'
+    dict1 = load_data(path1)
+    dict2 = load_data(path2)
+    diffs = compare_dicts(dict1, dict2)
+    answer = json_formatter(diffs)
+    reload = json.loads(answer)
+    assert reload == diffs

@@ -1,17 +1,20 @@
+import json
+
 COMMON_PREFIX = '    '
 FIRST_PREFIX = '  - '
 SECOND_PREFIX = '  + '
 # States
-ADDED = 0
-REMOVED = 1
-SAME = 2
-MODIFIED = 3
+ADDED = 'ADDED'
+REMOVED = 'REMOVED'
+SAME = 'SAME'
+MODIFIED = 'MODIFIED'
 
 
 def get_formatter(name: str):
     formatters = {
         'stylish': stylish,
         'plain': plain,
+        'json': json_formatter
     }
     return formatters[name]
 
@@ -131,3 +134,7 @@ def plain_strings(dif_list: dict, prefix=''):
 def plain(dif_list: dict):
     strings = plain_strings(dif_list)
     return '\n'.join(strings)
+
+
+def json_formatter(dif_list: dict):
+    return json.dumps(dif_list, sort_keys=True)

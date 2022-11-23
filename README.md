@@ -23,3 +23,5 @@
 - stylish (default)
 - plain
 [![asciicast](https://asciinema.org/a/ORZTQcSCE21paWp8EvUIeilfE.svg)](https://asciinema.org/a/ORZTQcSCE21paWp8EvUIeilfE)
+- json
+[![asciicast](https://asciinema.org/a/BC4tQmJ1QVeL3mA46HV1Lpaeb.svg)](https://asciinema.org/a/BC4tQmJ1QVeL3mA46HV1Lpaeb)
