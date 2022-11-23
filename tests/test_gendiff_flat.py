@@ -5,7 +5,7 @@ from gendiff.data_loader import load_data
 
 def test_compare_dicts_json():
     answer = 'tests/fixtures/correct1.txt'
-    with open(answer) as ans: 
+    with open(answer) as ans:
         correct = "".join(ans.readlines())
     path1 = 'tests/fixtures/file1_flat.json'
     path2 = 'tests/fixtures/file2_flat.json'
@@ -17,7 +17,7 @@ def test_compare_dicts_json():
 
 def test_compare_dicts_yaml():
     answer = 'tests/fixtures/correct1.txt'
-    with open(answer) as ans: 
+    with open(answer) as ans:
         correct = "".join(ans.readlines())
     path1 = 'tests/fixtures/file1_flat.yml'
     path2 = 'tests/fixtures/file2_flat.yml'
@@ -29,7 +29,7 @@ def test_compare_dicts_yaml():
 
 def test_compare_dicts_onefile():
     answer = 'tests/fixtures/correct2.txt'
-    with open(answer) as ans: 
+    with open(answer) as ans:
         correct = "".join(ans.readlines())
     path_ = 'tests/fixtures/file1_flat.json'
     dict_ = load_data(path_)

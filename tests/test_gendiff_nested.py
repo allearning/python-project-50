@@ -6,7 +6,7 @@ from gendiff.data_loader import load_data
 
 def test_stylish_json():
     answer = 'tests/fixtures/correct3.txt'
-    with open(answer) as ans: 
+    with open(answer) as ans:
         correct = "".join(ans.readlines())
     path1 = 'tests/fixtures/file1.json'
     path2 = 'tests/fixtures/file2.json'
@@ -34,7 +34,7 @@ def test_json_yaml2():
 
 def test_generate_diffs_yaml():
     answer = 'tests/fixtures/correct3.txt'
-    with open(answer) as ans: 
+    with open(answer) as ans:
         correct = "".join(ans.readlines())
     path1 = 'tests/fixtures/file1.yml'
     path2 = 'tests/fixtures/file2.yml'
@@ -46,7 +46,7 @@ def test_generate_diffs_yaml():
 
 def test_generate_diffs_onefile_json():
     answer = 'tests/fixtures/correct4.txt'
-    with open(answer) as ans: 
+    with open(answer) as ans:
         correct = "".join(ans.readlines())
     path_ = 'tests/fixtures/file1.json'
     dict_ = load_data(path_)
@@ -56,7 +56,7 @@ def test_generate_diffs_onefile_json():
 
 def test_generate_diffs_onefile_yaml():
     answer = 'tests/fixtures/correct4.txt'
-    with open(answer) as ans: 
+    with open(answer) as ans:
         correct = "".join(ans.readlines())
     path_ = 'tests/fixtures/file1.yml'
     dict_ = load_data(path_)
@@ -66,7 +66,7 @@ def test_generate_diffs_onefile_yaml():
 
 def test_plain_json():
     answer = 'tests/fixtures/correct_plain.txt'
-    with open(answer) as ans: 
+    with open(answer) as ans:
         correct = "".join(ans.readlines())
     path1 = 'tests/fixtures/file1.json'
     path2 = 'tests/fixtures/file2.json'
@@ -79,7 +79,7 @@ def test_plain_json():
 
 def test_gendiff_plain():
     answer = 'tests/fixtures/correct_plain.txt'
-    with open(answer) as ans: 
+    with open(answer) as ans:
         correct = "".join(ans.readlines())
     path1 = 'tests/fixtures/file1.json'
     path2 = 'tests/fixtures/file2.json'
@@ -89,7 +89,7 @@ def test_gendiff_plain():
 
 def test_gendiff_stylish():
     answer = 'tests/fixtures/correct3.txt'
-    with open(answer) as ans: 
+    with open(answer) as ans:
         correct = "".join(ans.readlines())
     path1 = 'tests/fixtures/file1.json'
     path2 = 'tests/fixtures/file2.json'
